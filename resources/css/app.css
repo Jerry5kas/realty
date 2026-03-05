@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    /* Light Theme Colors */
+    --color-primary: 25 55 109; /* Deep Blue #19376D */
+    --color-secondary: 212 175 55; /* Gold #D4AF37 */
+    --color-accent: 13 27 54; /* Dark Blue #0D1B36 */
+    --color-background: 255 255 255; /* White */
+    
+    /* Extended Color Palette */
+    --color-deep-blue: 25 55 109;
+    --color-gold: 212 175 55;
+    --color-dark-blue: 13 27 54;
+    --color-white: 255 255 255;
+}
+
+/* Global Light Theme Styles */
+body {
+    @apply bg-white text-[#0D1B36];
+}
+
+/* Force white text on sidebar navigation */
+aside nav a {
+    color: white !important;
+}
+
+aside nav a svg {
+    color: white !important;
+    stroke: white !important;
+}
+
+aside nav a svg path {
+    stroke: white !important;
+}
+
+aside nav a span {
+    color: white !important;
+}
+
+/* Force white text on sidebar logo */
+aside h1 {
+    color: white !important;
+}
+
+/* Active state - gold background with deep blue text */
+aside nav a.bg-\[\#D4AF37\] {
+    background-color: rgb(212, 175, 55) !important;
+    color: rgb(25, 55, 109) !important;
+}
+
+aside nav a.bg-\[\#D4AF37\] svg {
+    color: rgb(25, 55, 109) !important;
+    stroke: rgb(25, 55, 109) !important;
+}
+
+aside nav a.bg-\[\#D4AF37\] svg path {
+    stroke: rgb(25, 55, 109) !important;
+}
+
+aside nav a.bg-\[\#D4AF37\] span {
+    color: rgb(25, 55, 109) !important;
+}
+
+/* Active state - gold background */
+aside nav a.bg-\[\#D4AF37\] {
+    background-color: rgb(212, 175, 55) !important;
+    color: white !important;
+}
+
+/* Automatic white text on dark backgrounds */
+.bg-\[\#19376D\],
+.bg-\[\#0D1B36\],
+.bg-primary,
+.bg-accent {
+    color: white !important;
+}
+
+.bg-\[\#19376D\] *:not(.text-\[\#D4AF37\]):not(.text-\[\#19376D\]):not(.text-white),
+.bg-\[\#0D1B36\] *:not(.text-\[\#D4AF37\]):not(.text-\[\#19376D\]):not(.text-white),
+.bg-primary *:not(.text-secondary):not(.text-primary):not(.text-white),
+.bg-accent *:not(.text-secondary):not(.text-primary):not(.text-white) {
+    color: white;
+}
+
+/* Custom utility classes for theme colors */
+.bg-primary {
+    background-color: rgb(25 55 109);
+}
+
+.bg-secondary {
+    background-color: rgb(212 175 55);
+}
+
+.bg-accent {
+    background-color: rgb(13 27 54);
+}
+
+.text-primary {
+    color: rgb(25 55 109);
+}
+
+.text-secondary {
+    color: rgb(212 175 55);
+}
+
+.text-accent {
+    color: rgb(13 27 54);
+}
+
+.border-primary {
+    border-color: rgb(25 55 109);
+}
+
+.border-secondary {
+    border-color: rgb(212 175 55);
+}
+
+.border-accent {
+    border-color: rgb(13 27 54);
+}
