@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Amenity;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class AmenitySeeder extends Seeder
 {
@@ -53,6 +54,7 @@ class AmenitySeeder extends Seeder
         ];
 
         foreach ($amenities as $amenity) {
+            $amenity['slug'] = Str::slug($amenity['name']);
             Amenity::create($amenity);
         }
     }

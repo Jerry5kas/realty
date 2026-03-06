@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\PropertyFeature;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class PropertyFeatureSeeder extends Seeder
 {
@@ -33,6 +34,7 @@ class PropertyFeatureSeeder extends Seeder
         ];
 
         foreach ($features as $feature) {
+            $feature['slug'] = Str::slug($feature['name']);
             PropertyFeature::create($feature);
         }
     }

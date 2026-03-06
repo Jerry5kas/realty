@@ -144,6 +144,14 @@
                         <span class="font-medium">Media Assets</span>
                     </a>
 
+                    <!-- Collections -->
+                    <a href="{{ route('collections.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('collections.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('collections.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('collections.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('collections.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <span class="font-medium">Collections</span>
+                    </a>
+
                     <!-- Users & CRM Group -->
                     <div class="pt-6 pb-2">
                         <h3 class="px-3 text-xs font-semibold uppercase tracking-wider text-yellow-500">Users & CRM</h3>

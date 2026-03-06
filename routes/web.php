@@ -93,3 +93,17 @@ Route::post('/roles/bulk-delete', [App\Http\Controllers\RoleController::class, '
 Route::resource('users', App\Http\Controllers\UserController::class)->middleware('auth');
 Route::post('/users/bulk-delete', [App\Http\Controllers\UserController::class, 'bulkDelete'])
     ->middleware('auth')->name('users.bulk-delete');
+
+
+// Collections Routes - Admin (must come before public routes)
+Route::middleware('auth')->group(function () {
+    Route::resource('collections', App\Http\Controllers\CollectionController::class);
+    Route::post('/collections/bulk-delete', [App\Http\Controllers\CollectionController::class, 'bulkDelete'])
+        ->name('collections.bulk-delete');
+});
+
+// Collections Routes - Public
+Route::get('/collection/{slug}', [App\Http\Controllers\CollectionController::class, 'showPublic'])->name('collection.show');
+
+// Listings Page - Public
+Route::get('/listings', [HomeController::class, 'listings'])->name('listings');

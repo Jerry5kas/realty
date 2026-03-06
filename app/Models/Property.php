@@ -69,6 +69,12 @@ class Property extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function propertyType()
+    {
+        return $this->belongsTo(PropertyType::class, 'property_type');
+    }
+
+
     public function amenities()
     {
         return $this->belongsToMany(Amenity::class, 'amenity_property');

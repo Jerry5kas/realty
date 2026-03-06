@@ -81,6 +81,12 @@ class RolesAndPermissionsSeeder extends Seeder
             ['name' => 'Edit Media Assets', 'slug' => 'media-assets.edit', 'module' => 'media-assets'],
             ['name' => 'Delete Media Assets', 'slug' => 'media-assets.delete', 'module' => 'media-assets'],
 
+            // Collections
+            ['name' => 'View Collections', 'slug' => 'collections.view', 'module' => 'collections'],
+            ['name' => 'Create Collections', 'slug' => 'collections.create', 'module' => 'collections'],
+            ['name' => 'Edit Collections', 'slug' => 'collections.edit', 'module' => 'collections'],
+            ['name' => 'Delete Collections', 'slug' => 'collections.delete', 'module' => 'collections'],
+
             // Users & Roles
             ['name' => 'View Users', 'slug' => 'users.view', 'module' => 'users'],
             ['name' => 'Create Users', 'slug' => 'users.create', 'module' => 'users'],
@@ -136,7 +142,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'permissions' => Permission::whereIn('module', [
                     'properties', 'projects', 'transactions', 'events', 
                     'builders', 'cities', 'amenities', 'features', 'property-types',
-                    'banners', 'media-assets', 'owners', 'reports'
+                    'banners', 'media-assets', 'collections', 'owners', 'reports'
                 ])->pluck('id')->toArray(),
             ],
             [

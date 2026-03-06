@@ -66,23 +66,72 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            // Basic Info
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'type' => 'required|in:buy,sale,rent,lease,pg',
             'category' => 'required|in:residential,commercial,land',
             'property_type' => 'nullable|string',
+            
+            // Pricing
             'price' => 'required|numeric|min:0',
+            'price_per_sqft' => 'nullable|numeric|min:0',
+            'maintenance_charges' => 'nullable|numeric|min:0',
+            'maintenance_period' => 'nullable|string',
+            'security_deposit' => 'nullable|numeric|min:0',
+            
+            // Area Details
+            'carpet_area' => 'nullable|numeric|min:0',
+            'built_up_area' => 'nullable|numeric|min:0',
+            'super_built_up_area' => 'nullable|numeric|min:0',
+            'area_unit' => 'nullable|string',
+            
+            // Property Details
+            'bedrooms' => 'nullable|integer|min:0',
+            'bathrooms' => 'nullable|integer|min:0',
+            'balconies' => 'nullable|integer|min:0',
+            'floor_number' => 'nullable|integer|min:0',
+            'total_floors' => 'nullable|integer|min:0',
+            'furnishing_status' => 'nullable|string',
+            'facing' => 'nullable|string',
+            'parking_covered' => 'nullable|integer|min:0',
+            'parking_open' => 'nullable|integer|min:0',
+            'age_of_property' => 'nullable|string',
+            
+            // Location
             'city_id' => 'required|exists:cities,id',
             'locality' => 'nullable|string',
             'address' => 'nullable|string',
-            'bedrooms' => 'nullable|integer|min:0',
-            'bathrooms' => 'nullable|integer|min:0',
-            'carpet_area' => 'nullable|numeric|min:0',
+            'pincode' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            
+            // Legal & Compliance
+            'rera_number' => 'nullable|string',
+            'possession_status' => 'nullable|in:ready-to-move,under-construction,upcoming',
+            'possession_date' => 'nullable|date',
+            'available_from' => 'nullable|date',
+            
+            // Media
+            'video_url' => 'nullable|url',
+            'virtual_tour_url' => 'nullable|url',
+            
+            // Relationships
+            'project_id' => 'nullable|exists:projects,id',
+            'builder_id' => 'nullable|exists:builders,id',
+            
+            // Publishing
             'status' => 'required|in:draft,published,sold,rented,inactive',
+            'is_featured' => 'nullable|boolean',
+            'is_verified' => 'nullable|boolean',
         ]);
 
         $validated['slug'] = Str::slug($request->title);
         $validated['user_id'] = auth()->id();
+        
+        // Handle boolean fields (checkboxes)
+        $validated['is_featured'] = $request->has('is_featured') ? true : false;
+        $validated['is_verified'] = $request->has('is_verified') ? true : false;
         
         // Handle images
         if ($request->filled('images')) {
@@ -128,24 +177,74 @@ class PropertyController extends Controller
     public function update(Request $request, Property $property)
     {
         $validated = $request->validate([
+            // Basic Info
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'type' => 'required|in:buy,sale,rent,lease,pg',
             'category' => 'required|in:residential,commercial,land',
             'property_type' => 'nullable|string',
+            
+            // Pricing
             'price' => 'required|numeric|min:0',
+            'price_per_sqft' => 'nullable|numeric|min:0',
+            'maintenance_charges' => 'nullable|numeric|min:0',
+            'maintenance_period' => 'nullable|string',
+            'security_deposit' => 'nullable|numeric|min:0',
+            
+            // Area Details
+            'carpet_area' => 'nullable|numeric|min:0',
+            'built_up_area' => 'nullable|numeric|min:0',
+            'super_built_up_area' => 'nullable|numeric|min:0',
+            'area_unit' => 'nullable|string',
+            
+            // Property Details
+            'bedrooms' => 'nullable|integer|min:0',
+            'bathrooms' => 'nullable|integer|min:0',
+            'balconies' => 'nullable|integer|min:0',
+            'floor_number' => 'nullable|integer|min:0',
+            'total_floors' => 'nullable|integer|min:0',
+            'furnishing_status' => 'nullable|string',
+            'facing' => 'nullable|string',
+            'parking_covered' => 'nullable|integer|min:0',
+            'parking_open' => 'nullable|integer|min:0',
+            'age_of_property' => 'nullable|string',
+            
+            // Location
             'city_id' => 'required|exists:cities,id',
             'locality' => 'nullable|string',
             'address' => 'nullable|string',
-            'bedrooms' => 'nullable|integer|min:0',
-            'bathrooms' => 'nullable|integer|min:0',
-            'carpet_area' => 'nullable|numeric|min:0',
+            'pincode' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            
+            // Legal & Compliance
+            'rera_number' => 'nullable|string',
+            'possession_status' => 'nullable|in:ready-to-move,under-construction,upcoming',
+            'possession_date' => 'nullable|date',
+            'available_from' => 'nullable|date',
+            
+            // Media
+            'video_url' => 'nullable|url',
+            'virtual_tour_url' => 'nullable|url',
+            
+            // Relationships
+            'project_id' => 'nullable|exists:projects,id',
+            'builder_id' => 'nullable|exists:builders,id',
+            
+            // Publishing
             'status' => 'required|in:draft,published,sold,rented,inactive',
+            'is_featured' => 'nullable|boolean',
+            'is_verified' => 'nullable|boolean',
         ]);
 
+        // Handle slug update
         if ($request->title !== $property->title) {
             $validated['slug'] = Str::slug($request->title);
         }
+
+        // Handle boolean fields (checkboxes)
+        $validated['is_featured'] = $request->has('is_featured') ? true : false;
+        $validated['is_verified'] = $request->has('is_verified') ? true : false;
 
         // Handle images
         if ($request->filled('images')) {

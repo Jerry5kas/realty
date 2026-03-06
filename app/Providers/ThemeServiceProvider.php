@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\ThemeSetting;
+use App\Services\ThemeService;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -12,7 +13,13 @@ class ThemeServiceProvider extends ServiceProvider
     {
         // Share theme settings with all views
         View::composer('*', function ($view) {
-            $view->with('theme', ThemeSetting::getAll());
+            $themeSettings = ThemeSetting::getAll();
+            $themeColors = ThemeService::getThemeWithTextColors($themeSettings);
+            
+            // Merge all theme data
+            $theme = array_merge($themeSettings, $themeColors);
+            
+            $view->with('theme', $theme);
         });
     }
 

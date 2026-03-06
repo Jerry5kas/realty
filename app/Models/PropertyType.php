@@ -38,4 +38,9 @@ class PropertyType extends Model
     {
         return $query->where('category', 'commercial');
     }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class, 'property_type', 'slug');
+    }
 }
