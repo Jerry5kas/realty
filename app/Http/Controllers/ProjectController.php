@@ -101,10 +101,24 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $project->load(['city', 'properties', 'amenities']);
+        $project->load(['city', 'properties', 'amenities', 'builder']);
         $project->increment('views');
         
-        return view('projects.show', compact('project'));
+        // Get recommended projects (same city, similar price range)
+        $recommendedProjects = Project::with(['city', 'builder'])
+            ->where('status', '!=', 'draft')
+            ->where('id', '!=', $project->id)
+            ->where('city_id', $project->city_id)
+            ->when($project->min_price, function($query) use ($project) {
+                $minPrice = $project->min_price * 0.7;
+                $maxPrice = $project->min_price * 1.3;
+                return $query->whereBetween('min_price', [$minPrice, $maxPrice]);
+            })
+            ->latest()
+            ->take(3)
+            ->get();
+        
+        return view('projects.show', compact('project', 'recommendedProjects'));
     }
 
     public function edit(Project $project)

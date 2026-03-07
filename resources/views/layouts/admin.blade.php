@@ -57,32 +57,41 @@
                     </a>
 
                     <!-- Listings Group -->
+                    @if(can('properties.view') || can('projects.view'))
                     <div class="pt-6 pb-2">
                         <h3 class="px-3 text-xs font-semibold uppercase tracking-wider text-yellow-500">Listings</h3>
                     </div>
+                    @endif
 
                     <!-- Properties -->
+                    @if(can('properties.view'))
                     <a href="{{ route('properties.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('properties.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('properties.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('properties.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('properties.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                         <span class="font-medium">Properties</span>
                     </a>
+                    @endif
 
                     <!-- Projects -->
+                    @if(can('projects.view'))
                     <a href="{{ route('projects.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('projects.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('projects.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('projects.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('projects.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                         <span class="font-medium">Projects</span>
                     </a>
+                    @endif
 
                     <!-- Master Data Group -->
+                    @if(can('cities.view') || can('amenities.view') || can('features.view') || can('property-types.view') || can('builders.view'))
                     <div class="pt-6 pb-2">
                         <h3 class="px-3 text-xs font-semibold uppercase tracking-wider text-yellow-500">Master Data</h3>
                     </div>
+                    @endif
 
                     <!-- Cities -->
+                    @if(can('cities.view'))
                     <a href="{{ route('cities.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('cities.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('cities.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('cities.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('cities.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -90,88 +99,111 @@
                         </svg>
                         <span class="font-medium">Cities</span>
                     </a>
+                    @endif
 
                     <!-- Amenities -->
+                    @if(can('amenities.view'))
                     <a href="{{ route('amenities.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('amenities.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('amenities.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('amenities.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('amenities.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         <span class="font-medium">Amenities</span>
                     </a>
+                    @endif
 
                     <!-- Features -->
+                    @if(can('features.view'))
                     <a href="{{ route('features.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('features.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('features.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('features.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('features.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                         </svg>
                         <span class="font-medium">Features</span>
                     </a>
+                    @endif
 
                     <!-- Property Types -->
+                    @if(can('property-types.view'))
                     <a href="{{ route('property-types.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('property-types.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('property-types.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('property-types.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('property-types.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                         </svg>
                         <span class="font-medium">Property Types</span>
                     </a>
+                    @endif
 
                     <!-- Builders -->
+                    @if(can('builders.view'))
                     <a href="{{ route('builders.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('builders.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('builders.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('builders.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('builders.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                         <span class="font-medium">Builders</span>
                     </a>
+                    @endif
 
                     <!-- Content Management Group -->
+                    @if(can('banners.view') || can('media-assets.view') || can('collections.view'))
                     <div class="pt-6 pb-2">
                         <h3 class="px-3 text-xs font-semibold uppercase tracking-wider text-yellow-500">Content</h3>
                     </div>
+                    @endif
 
                     <!-- Banners -->
+                    @if(can('banners.view'))
                     <a href="{{ route('banners.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('banners.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('banners.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('banners.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('banners.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                         <span class="font-medium">Banners</span>
                     </a>
+                    @endif
 
                     <!-- Media Assets -->
+                    @if(can('media-assets.view'))
                     <a href="{{ route('media-assets.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('media-assets.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('media-assets.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('media-assets.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('media-assets.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                         </svg>
                         <span class="font-medium">Media Assets</span>
                     </a>
+                    @endif
 
                     <!-- Collections -->
+                    @if(can('collections.view'))
                     <a href="{{ route('collections.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('collections.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('collections.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('collections.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('collections.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                         </svg>
                         <span class="font-medium">Collections</span>
                     </a>
+                    @endif
 
                     <!-- Users & CRM Group -->
+                    @if(can('users.view') || can('roles.view'))
                     <div class="pt-6 pb-2">
                         <h3 class="px-3 text-xs font-semibold uppercase tracking-wider text-yellow-500">Users & CRM</h3>
                     </div>
+                    @endif
 
                     <!-- Users (System Access) -->
+                    @if(can('users.view'))
                     <a href="{{ route('users.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('users.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('users.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('users.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('users.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
                         <span class="font-medium">Users</span>
                     </a>
+                    @endif
 
                     <!-- Roles & Permissions -->
+                    @if(can('roles.view'))
                     <a href="{{ route('roles.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('roles.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('roles.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('roles.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('roles.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                         </svg>
                         <span class="font-medium">Roles & Permissions</span>
                     </a>
+                    @endif
 
                     <!-- Owners (Property Owners CRM) -->
                     <a href="#" class="group flex items-center px-3 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-200">
@@ -210,33 +242,41 @@
                     </a>
 
                     <!-- Other Group -->
+                    @if(can('transactions.view') || can('events.view') || can('reports.view'))
                     <div class="pt-6 pb-2">
                         <h3 class="px-3 text-xs font-semibold uppercase tracking-wider text-yellow-500">Other</h3>
                     </div>
+                    @endif
 
                     <!-- Transactions -->
+                    @if(can('transactions.view'))
                     <a href="{{ route('transactions.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('transactions.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('transactions.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('transactions.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('transactions.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                         </svg>
                         <span class="font-medium">Transactions</span>
                     </a>
+                    @endif
 
                     <!-- Calendar -->
+                    @if(can('events.view'))
                     <a href="{{ route('events.index') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('events.*') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('events.*') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('events.*') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('events.*') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                         <span class="font-medium">Calendar</span>
                     </a>
+                    @endif
 
                     <!-- Reports -->
+                    @if(can('reports.view'))
                     <a href="#" class="group flex items-center px-3 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-200">
                         <svg class="w-5 h-5 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                         <span class="font-medium">Reports</span>
                     </a>
+                    @endif
 
                     <!-- Divider -->
                     <div class="pt-4 pb-2">
@@ -244,6 +284,7 @@
                     </div>
 
                     <!-- Settings -->
+                    @if(can('settings.view'))
                     <a href="{{ route('theme.settings') }}" class="group flex items-center px-3 py-3 hover:bg-white/10 rounded-xl transition-all duration-200 {{ request()->routeIs('theme.settings') ? 'shadow-lg' : 'text-white' }}" style="{{ request()->routeIs('theme.settings') ? 'background-color: ' . $theme['secondary_color'] . '; color: ' . $theme['primary_color'] . ';' : '' }}">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('theme.settings') ? '' : 'text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="{{ request()->routeIs('theme.settings') ? 'color: ' . $theme['primary_color'] . ';' : '' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -251,6 +292,7 @@
                         </svg>
                         <span class="font-medium">Settings</span>
                     </a>
+                    @endif
                 </nav>
 
                 <!-- User Profile -->

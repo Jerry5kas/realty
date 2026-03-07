@@ -102,4 +102,14 @@ class Project extends Model
     {
         return $this->images[0] ?? null;
     }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

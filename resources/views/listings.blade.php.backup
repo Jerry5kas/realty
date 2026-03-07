@@ -390,10 +390,10 @@
                     <!-- Map Image -->
                     <img src="https://ik.imagekit.io/area24onestorage/media-assets/map.png" alt="Map" class="w-full rounded-xl shadow-lg">
                     
-                    <!-- Recommended Searches -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <div class="p-4 border-b" style="background: linear-gradient(135deg, {{ $theme['primary_color'] }}08 0%, {{ $theme['primary_color'] }}15 100%);">
-                            <h3 class="text-sm font-bold flex items-center gap-2" style="color: {{ $theme['primary
+                    <!-- Vertical Banners -->
+                    <img src="https://ik.imagekit.io/area24onestorage/Realty%20banners/AREA24%20REALTY%20BANNER%209%20(1).png?updatedAt=1772102189108" alt="Banner" class="w-full rounded-xl shadow-lg">
+                    <img src="https://ik.imagekit.io/area24onestorage/Realty%20banners/AREA24%20REALTY%20BANNER%208%20(1).png?updatedAt=1772102187814" alt="Banner" class="w-full rounded-xl shadow-lg">
+                </div>
             </div>
         </div>
     </div>

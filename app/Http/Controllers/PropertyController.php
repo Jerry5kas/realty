@@ -70,6 +70,7 @@ class PropertyController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'type' => 'required|in:buy,sale,rent,lease,pg',
+            'sale_type' => 'nullable|in:initial,resale',
             'category' => 'required|in:residential,commercial,land',
             'property_type' => 'nullable|string',
             
@@ -156,10 +157,24 @@ class PropertyController extends Controller
 
     public function show(Property $property)
     {
-        $property->load(['city', 'project', 'user', 'amenities', 'features']);
+        $property->load(['city', 'project', 'user', 'amenities', 'features', 'builder', 'propertyType']);
         $property->increment('views');
         
-        return view('properties.show', compact('property'));
+        // Get recommended properties (same city, similar price range)
+        $recommendedProperties = Property::with(['city', 'builder', 'propertyType'])
+            ->published()
+            ->where('id', '!=', $property->id)
+            ->where('city_id', $property->city_id)
+            ->when($property->price, function($query) use ($property) {
+                $minPrice = $property->price * 0.7;
+                $maxPrice = $property->price * 1.3;
+                return $query->whereBetween('price', [$minPrice, $maxPrice]);
+            })
+            ->latest()
+            ->take(3)
+            ->get();
+        
+        return view('properties.show', compact('property', 'recommendedProperties'));
     }
 
     public function edit(Property $property)
@@ -181,6 +196,7 @@ class PropertyController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'type' => 'required|in:buy,sale,rent,lease,pg',
+            'sale_type' => 'nullable|in:initial,resale',
             'category' => 'required|in:residential,commercial,land',
             'property_type' => 'nullable|string',
             

@@ -450,7 +450,7 @@
             <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group flex flex-col">
                 <!-- Image Slider with Alpine.js -->
                 <!-- Property Image Slider -->
-                <div class="relative h-48 md:h-56 overflow-hidden flex-shrink-0" x-data="{ currentSlide: 0, totalSlides: {{ count($property->images ?? []) > 0 ? count($property->images) : 1 }} }">
+                <a href="{{ route('property.show', $property->slug) }}" class="relative h-48 md:h-56 overflow-hidden flex-shrink-0 block" x-data="{ currentSlide: 0, totalSlides: {{ count($property->images ?? []) > 0 ? count($property->images) : 1 }} }">
                     @if(count($property->images ?? []) > 0)
                         <!-- Image Slides -->
                         @foreach($property->images as $index => $image)
@@ -501,12 +501,12 @@
                         <span class="text-xs font-bold text-gray-800">{{ $property->builder->company_name }}</span>
                     </div>
                     @endif
-                </div>
+                </a>
 
                 <!-- Property Details -->
                 <div class="p-4 flex flex-col flex-grow">
                     <!-- Title -->
-                    <h3 class="text-lg md:text-xl font-bold mb-1 text-gray-900">{{ $property->title }}</h3>
+                    <a href="{{ route('property.show', $property->slug) }}" class="text-lg md:text-xl font-bold mb-1 text-gray-900 hover:underline">{{ $property->title }}</a>
                     
                     <!-- Location -->
                     <p class="text-xs md:text-sm text-gray-600 mb-3 flex items-center gap-1">
@@ -549,7 +549,7 @@
 
                     <!-- Action Buttons - View Details & WhatsApp -->
                     <div class="flex items-center gap-2 mt-auto">
-                        <a href="#" class="flex-1 flex items-center justify-center gap-2 py-2.5 md:py-3 rounded-xl font-semibold transition-all hover:shadow-lg text-sm md:text-base border-2" style="border-color: {{ $theme['primary_color'] }}; color: {{ $theme['primary_color'] }};">
+                        <a href="{{ route('property.show', $property->slug) }}" class="flex-1 flex items-center justify-center gap-2 py-2.5 md:py-3 rounded-xl font-semibold transition-all hover:shadow-lg text-sm md:text-base border-2" style="border-color: {{ $theme['primary_color'] }}; color: {{ $theme['primary_color'] }};">
                             <span>View Details</span>
                         </a>
                         <a href="https://wa.me/919876543210?text=I'm interested in {{ $property->title }}" target="_blank" class="flex items-center justify-center p-2.5 md:p-3 rounded-xl transition-all hover:shadow-lg" style="background-color: {{ $theme['secondary_color'] }}; color: {{ $theme['secondary_text'] }};" title="Contact via WhatsApp">
@@ -1336,7 +1336,7 @@
                          x-transition:leave-end="opacity-0"
                          @endif>
                         <!-- Image Container - Compact Height -->
-                        <div class="relative h-48 overflow-hidden">
+                        <a href="@if(isset($item->possession_status)){{ route('property.show', $item->slug) }}@else{{ route('project.show', $item->slug) }}@endif" class="relative h-48 overflow-hidden block">
                             @if($item->images && count($item->images) > 0)
                             <img src="{{ $item->images[0] }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             @else
@@ -1368,11 +1368,13 @@
                                 </div>
                             </div>
                             @endif
-                        </div>
+                        </a>
                         
                         <!-- Content - Compact -->
                         <div class="p-3">
-                            <h3 class="text-sm font-bold text-gray-900 line-clamp-1 mb-1">{{ $item->title }}</h3>
+                            <a href="@if(isset($item->possession_status)){{ route('property.show', $item->slug) }}@else{{ route('project.show', $item->slug) }}@endif" class="block">
+                                <h3 class="text-sm font-bold text-gray-900 line-clamp-1 mb-1 hover:text-blue-600 transition-colors">{{ $item->title }}</h3>
+                            </a>
                             
                             @if(isset($item->city))
                             <div class="flex items-center gap-1 mb-2">

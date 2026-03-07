@@ -1,51 +1,56 @@
 <x-layout.frontend>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <!-- Modern Filter Section -->
     <div class="bg-gradient-to-br from-gray-50 to-white border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 py-6">
-            <form method="GET" action="{{ route('listings') }}" class="space-y-4">
+        <div class="max-w-full mx-auto px-4 py-6">
+            <form method="GET" action="{{ route('map.view') }}" class="space-y-4">
                 <input type="hidden" name="type" value="{{ $type }}">
 
                 <!-- Top Row: Type Tabs + Possession Toggle -->
                 <div class="flex flex-wrap items-center justify-between gap-4">
                     <!-- Type Tabs -->
                     <div class="flex flex-wrap gap-2">
-                        <a href="{{ route('listings', array_merge(request()->except('type'), ['type' => 'all'])) }}" 
+                        <a href="{{ route('map.view', array_merge(request()->except('type'), ['type' => 'all'])) }}" 
                            class="px-4 py-2.5 rounded-lg text-sm font-semibold transition-all {{ $type === 'all' ? 'shadow-md' : 'bg-white border border-gray-200 text-gray-700 hover:border-gray-300 hover:shadow-sm' }}"
                            @if($type === 'all') style="background-color: {{ $theme['primary_color'] }}; color: white;" @endif>
-                            All Listings
+                            All
                         </a>
-                        <a href="{{ route('listings', array_merge(request()->except('type'), ['type' => 'properties'])) }}" 
+                        <a href="{{ route('map.view', array_merge(request()->except('type'), ['type' => 'properties'])) }}" 
                            class="px-4 py-2.5 rounded-lg text-sm font-semibold transition-all {{ $type === 'properties' ? 'shadow-md' : 'bg-white border border-gray-200 text-gray-700 hover:border-gray-300 hover:shadow-sm' }}"
                            @if($type === 'properties') style="background-color: {{ $theme['primary_color'] }}; color: white;" @endif>
                             Properties
                         </a>
-                        <a href="{{ route('listings', array_merge(request()->except('type'), ['type' => 'projects'])) }}" 
+                        <a href="{{ route('map.view', array_merge(request()->except('type'), ['type' => 'projects'])) }}" 
                            class="px-4 py-2.5 rounded-lg text-sm font-semibold transition-all {{ $type === 'projects' ? 'shadow-md' : 'bg-white border border-gray-200 text-gray-700 hover:border-gray-300 hover:shadow-sm' }}"
                            @if($type === 'projects') style="background-color: {{ $theme['primary_color'] }}; color: white;" @endif>
                             Projects
                         </a>
                     </div>
                     
-                    <!-- Off Plan / Ready to Move Toggle -->
-                    <div class="flex items-center gap-2 bg-white rounded-lg p-1.5 border border-gray-200 shadow-sm">
-                        <a href="{{ route('listings', array_merge(request()->except('possession_filter'), ['type' => $type, 'possession_filter' => 'off-plan'])) }}" 
-                           class="px-4 py-2 rounded-md text-sm font-semibold transition-all {{ request('possession_filter') === 'off-plan' ? 'shadow-sm' : 'text-gray-600 hover:text-gray-900' }}"
-                           @if(request('possession_filter') === 'off-plan') style="background-color: {{ $theme['primary_color'] }}20; color: {{ $theme['primary_color'] }};" @endif>
-                            Off Plan
-                        </a>
-                        <a href="{{ route('listings', array_merge(request()->except('possession_filter'), ['type' => $type, 'possession_filter' => 'ready-to-move'])) }}" 
-                           class="px-4 py-2 rounded-md text-sm font-semibold transition-all {{ request('possession_filter') === 'ready-to-move' ? 'shadow-sm' : 'text-gray-600 hover:text-gray-900' }}"
-                           @if(request('possession_filter') === 'ready-to-move') style="background-color: {{ $theme['primary_color'] }}20; color: {{ $theme['primary_color'] }};" @endif>
-                            Ready to Move
-                        </a>
-                        @if(request('possession_filter'))
-                        <a href="{{ route('listings', array_merge(request()->except('possession_filter'), ['type' => $type])) }}" 
-                           class="px-2 py-2 text-gray-400 hover:text-gray-600 transition-all" title="Clear possession filter">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </a>
-                        @endif
+                    <div class="flex items-center gap-3">
+                        <!-- Off Plan / Ready to Move Toggle -->
+                        <div class="flex items-center gap-2 bg-white rounded-lg p-1.5 border border-gray-200 shadow-sm">
+                            <a href="{{ route('map.view', array_merge(request()->except('possession_filter'), ['type' => $type, 'possession_filter' => 'off-plan'])) }}" 
+                               class="px-4 py-2 rounded-md text-sm font-semibold transition-all {{ request('possession_filter') === 'off-plan' ? 'shadow-sm' : 'text-gray-600 hover:text-gray-900' }}"
+                               @if(request('possession_filter') === 'off-plan') style="background-color: {{ $theme['primary_color'] }}20; color: {{ $theme['primary_color'] }};" @endif>
+                                Off Plan
+                            </a>
+                            <a href="{{ route('map.view', array_merge(request()->except('possession_filter'), ['type' => $type, 'possession_filter' => 'ready-to-move'])) }}" 
+                               class="px-4 py-2 rounded-md text-sm font-semibold transition-all {{ request('possession_filter') === 'ready-to-move' ? 'shadow-sm' : 'text-gray-600 hover:text-gray-900' }}"
+                               @if(request('possession_filter') === 'ready-to-move') style="background-color: {{ $theme['primary_color'] }}20; color: {{ $theme['primary_color'] }};" @endif>
+                                Ready to Move
+                            </a>
+                            @if(request('possession_filter'))
+                            <a href="{{ route('map.view', array_merge(request()->except('possession_filter'), ['type' => $type])) }}" 
+                               class="px-2 py-2 text-gray-400 hover:text-gray-600 transition-all" title="Clear possession filter">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </a>
+                            @endif
+                        </div>
                     </div>
                 </div>
 
@@ -62,7 +67,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                     </svg>
                                 </div>
-                                <select name="listing_type" class="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent focus:outline-none text-sm appearance-none bg-white hover:border-gray-400 transition-colors" style="focus:ring-color: {{ $theme['primary_color'] }};">
+                                <select name="listing_type" class="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent focus:outline-none text-sm appearance-none bg-white hover:border-gray-400 transition-colors">
                                     <option value="">All Types</option>
                                     <option value="buy" {{ request('listing_type') == 'buy' ? 'selected' : '' }}>Buy</option>
                                     <option value="rent" {{ request('listing_type') == 'rent' ? 'selected' : '' }}>Rent</option>
@@ -208,7 +213,7 @@
                             </svg>
                             Search
                         </button>
-                        <a href="{{ route('listings', ['type' => $type]) }}" class="flex items-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all" style="background-color: {{ $theme['primary_color'] }}; color: white;">
+                        <a href="{{ route('map.view', ['type' => $type]) }}" class="flex items-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
@@ -220,181 +225,262 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 py-6 md:py-10">
-        <div class="flex flex-col lg:flex-row gap-6">
-            <!-- Main Content -->
-            <div class="flex-1">
-                <!-- Results Count and View Options -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <!-- Left Side - Title -->
-                    <div class="flex-1">
-                        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                            @php
-                                $heading = '';
-                                $parts = [];
-                                
-                                // Build dynamic heading based on filters
-                                if (request('possession_filter') === 'off-plan') {
-                                    $parts[] = 'Off-Plan';
-                                } elseif (request('possession_filter') === 'ready-to-move') {
-                                    $parts[] = 'Ready to Move';
-                                }
-                                
-                                if ($type === 'properties') {
-                                    $parts[] = 'Properties';
-                                } elseif ($type === 'projects') {
-                                    $parts[] = 'Projects';
-                                } else {
-                                    $parts[] = 'Listings';
-                                }
-                                
-                                if ($listingType === 'buy') {
-                                    $parts[] = 'for Sale';
-                                } elseif ($listingType === 'rent') {
-                                    $parts[] = 'for Rent';
-                                }
-                                
-                                // Add location if city is selected
-                                if (request('city_id') && $cities->where('id', request('city_id'))->first()) {
-                                    $cityName = $cities->where('id', request('city_id'))->first()->name;
-                                    $parts[] = 'in ' . $cityName;
-                                }
-                                
-                                // Add builder if selected
-                                if (request('builder_id') && isset($builders) && $builders->where('id', request('builder_id'))->first()) {
-                                    $builderName = $builders->where('id', request('builder_id'))->first()->company_name;
-                                    $parts[] = 'by ' . $builderName;
-                                }
-                                
-                                $heading = implode(' ', $parts);
-                            @endphp
-                            {{ $heading }}
-                        </h2>
-                        
-                        @if($type !== 'projects')
-                        <!-- Sale Type Filter Tabs -->
+    <!-- Map View Container -->
+    <div class="w-full" x-data="mapViewApp()" x-init="initMap()">
+        <div class="flex h-[calc(100vh-250px)]">
+            <!-- Left Side - Cards List -->
+            <div class="w-2/5 overflow-y-auto bg-gray-50 p-4 space-y-4">
+                <!-- View Toggle and Sale Type Filter -->
+                <div class="flex items-center justify-between gap-4 mb-4">
+                    <!-- Sale Type Filter Tabs (only for properties) -->
+                    @if($type === 'properties')
+                    <div class="bg-white rounded-lg p-3 shadow-sm border border-gray-200 flex-1">
                         <div class="flex flex-wrap gap-2">
-                            <a href="{{ route('listings', array_merge(request()->except('sale_type'), ['type' => $type])) }}" 
+                            <a href="{{ route('map.view', array_merge(request()->except('sale_type'), ['type' => $type])) }}" 
                                class="px-4 py-2 rounded-lg text-sm font-medium transition-all {{ !request('sale_type') ? '' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50' }}"
                                @if(!request('sale_type')) style="background-color: {{ $theme['primary_color'] }}; color: white;" @endif>
                                 Any
                             </a>
-                            <a href="{{ route('listings', array_merge(request()->except('sale_type'), ['type' => $type, 'sale_type' => 'initial'])) }}" 
+                            <a href="{{ route('map.view', array_merge(request()->except('sale_type'), ['type' => $type, 'sale_type' => 'initial'])) }}" 
                                class="px-4 py-2 rounded-lg text-sm font-medium transition-all {{ request('sale_type') === 'initial' ? '' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50' }}"
                                @if(request('sale_type') === 'initial') style="background-color: {{ $theme['primary_color'] }}; color: white;" @endif>
                                 Initial Sale
                             </a>
-                            <a href="{{ route('listings', array_merge(request()->except('sale_type'), ['type' => $type, 'sale_type' => 'resale'])) }}" 
+                            <a href="{{ route('map.view', array_merge(request()->except('sale_type'), ['type' => $type, 'sale_type' => 'resale'])) }}" 
                                class="px-4 py-2 rounded-lg text-sm font-medium transition-all {{ request('sale_type') === 'resale' ? '' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50' }}"
                                @if(request('sale_type') === 'resale') style="background-color: {{ $theme['primary_color'] }}; color: white;" @endif>
                                 Resale
                             </a>
-                            <a href="{{ route('listings', array_merge(request()->except('sale_type'), ['type' => $type, 'sale_type' => 'developer'])) }}" 
+                            <a href="{{ route('map.view', array_merge(request()->except('sale_type'), ['type' => $type, 'sale_type' => 'developer'])) }}" 
                                class="px-4 py-2 rounded-lg text-sm font-medium transition-all {{ request('sale_type') === 'developer' ? '' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50' }}"
                                @if(request('sale_type') === 'developer') style="background-color: {{ $theme['primary_color'] }}; color: white;" @endif>
                                 By Developer
                             </a>
                         </div>
-                        @endif
                     </div>
+                    @else
+                    <div class="flex-1"></div>
+                    @endif
                     
-                    <!-- Right Side - View Options -->
-                    <div class="flex items-center gap-3">
-                        <!-- View Toggle -->
-                        <div class="flex items-center gap-2 bg-white border border-gray-300 rounded-lg p-1">
-                            <span class="px-3 py-1.5 rounded text-sm font-medium" style="background-color: {{ $theme['primary_color'] }}; color: white;">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                                </svg>
-                            </span>
-                            <a href="{{ route('map.view', array_merge(request()->all(), ['type' => $type])) }}" class="px-3 py-1.5 rounded text-sm font-medium text-gray-600 hover:bg-gray-100 transition-all">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
+                    <!-- List/Map Toggle Button -->
+                    <a href="{{ route('listings', request()->all()) }}" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        List View
+                    </a>
                 </div>
                 
                 <!-- Results Count -->
-                <div class="mb-4 text-sm text-gray-600">
-                    @if($type === 'all' || $type === 'properties')
-                        <span class="font-semibold">{{ $properties->total() }}</span> Properties
-                    @endif
+                <div class="text-sm font-semibold text-gray-700 mb-4">
                     @if($type === 'all')
-                        <span class="mx-2">•</span>
-                    @endif
-                    @if($type === 'all' || $type === 'projects')
-                        <span class="font-semibold">{{ $projects->total() }}</span> Projects
+                        {{ $properties->count() + $projects->count() }} Listings with location data
+                        @if($properties->count() > 0 && $projects->count() > 0)
+                            <span class="text-gray-500">({{ $properties->count() }} Properties, {{ $projects->count() }} Projects)</span>
+                        @endif
+                    @elseif($type === 'properties')
+                        {{ $properties->count() }} Properties with location data
+                    @else
+                        {{ $projects->count() }} Projects with location data
                     @endif
                 </div>
 
                 <!-- Properties List -->
-                @if(($type === 'all' || $type === 'properties') && $properties->count() > 0)
-                    <div class="mb-8">
-                        @if($type === 'all')
-                            <h2 class="text-xl font-bold mb-4" style="color: {{ $theme['primary_color'] }};">Properties</h2>
-                        @endif
-                        <div class="space-y-4">
-                            @foreach($properties as $property)
-                                @include('partials.property-card-compact', ['property' => $property])
-                            @endforeach
+                @if(($type === 'properties' || $type === 'all') && $properties->count() > 0)
+                    @if($type === 'all' && $properties->count() > 0)
+                        <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Properties</div>
+                    @endif
+                    @foreach($properties as $property)
+                        <div @mouseenter="focusLocation({{ $property->latitude }}, {{ $property->longitude }}, 'property-{{ $property->id }}')" 
+                             @mouseleave="clearFocus()"
+                             @click="centerMap({{ $property->latitude }}, {{ $property->longitude }})"
+                             data-listing-id="property-{{ $property->id }}"
+                             class="cursor-pointer transition-all hover:scale-[1.02]">
+                            @include('partials.property-card-compact', ['property' => $property])
                         </div>
-                        
-                        @if($properties->hasPages())
-                            <div class="mt-6">
-                                {{ $properties->appends(request()->except('properties_page'))->links() }}
-                            </div>
-                        @endif
-                    </div>
+                    @endforeach
                 @endif
 
                 <!-- Projects List -->
-                @if(($type === 'all' || $type === 'projects') && $projects->count() > 0)
-                    <div class="mb-8">
-                        @if($type === 'all')
-                            <h2 class="text-xl font-bold mb-4" style="color: {{ $theme['primary_color'] }};">Projects</h2>
-                        @endif
-                        <div class="space-y-4">
-                            @foreach($projects as $project)
-                                @include('partials.project-card-compact', ['project' => $project])
-                            @endforeach
+                @if(($type === 'projects' || $type === 'all') && $projects->count() > 0)
+                    @if($type === 'all' && $projects->count() > 0)
+                        <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 mt-6">Projects</div>
+                    @endif
+                    @foreach($projects as $project)
+                        <div @mouseenter="focusLocation({{ $project->latitude }}, {{ $project->longitude }}, 'project-{{ $project->id }}')" 
+                             @mouseleave="clearFocus()"
+                             @click="centerMap({{ $project->latitude }}, {{ $project->longitude }})"
+                             data-listing-id="project-{{ $project->id }}"
+                             class="cursor-pointer transition-all hover:scale-[1.02]">
+                            @include('partials.project-card-compact', ['project' => $project])
                         </div>
-                        
-                        @if($projects->hasPages())
-                            <div class="mt-6">
-                                {{ $projects->appends(request()->except('projects_page'))->links() }}
-                            </div>
-                        @endif
-                    </div>
+                    @endforeach
                 @endif
 
                 <!-- No Results -->
-                @if(($type === 'properties' && $properties->count() === 0) || ($type === 'projects' && $projects->count() === 0) || ($type === 'all' && $properties->count() === 0 && $projects->count() === 0))
+                @if($properties->count() === 0 && $projects->count() === 0)
                     <div class="bg-white rounded-xl shadow-md p-8 text-center">
                         <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
                         </svg>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">No Results Found</h3>
-                        <p class="text-gray-600 mb-4">Try adjusting your filters to find what you're looking for</p>
-                        <a href="{{ route('listings', ['type' => $type]) }}" class="inline-block px-6 py-2 rounded-lg font-semibold text-sm text-white" style="background-color: {{ $theme['primary_color'] }};">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">No Listings with Location Data</h3>
+                        <p class="text-gray-600 mb-4">Try adjusting your filters or check back later</p>
+                        <a href="{{ route('map.view', ['type' => $type]) }}" class="inline-block px-6 py-2 rounded-lg font-semibold text-sm text-white" style="background-color: {{ $theme['primary_color'] }};">
                             Clear All Filters
                         </a>
                     </div>
                 @endif
             </div>
 
-            <!-- Sidebar - Map and Vertical Banners -->
-            <div class="lg:w-80 space-y-4">
-                <div class="sticky top-4 space-y-4">
-                    <!-- Map Image -->
-                    <img src="https://ik.imagekit.io/area24onestorage/media-assets/map.png" alt="Map" class="w-full rounded-xl shadow-lg">
-                    
-                    <!-- Recommended Searches -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <div class="p-4 border-b" style="background: linear-gradient(135deg, {{ $theme['primary_color'] }}08 0%, {{ $theme['primary_color'] }}15 100%);">
-                            <h3 class="text-sm font-bold flex items-center gap-2" style="color: {{ $theme['primary
+            <!-- Right Side - Map -->
+            <div class="w-3/5 relative">
+                <div id="map" class="w-full h-full"></div>
             </div>
         </div>
     </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        function mapViewApp() {
+            return {
+                map: null,
+                markers: {},
+                focusCircle: null,
+                currentFocusMarker: null,
+                
+                initMap() {
+                    // Initialize map centered on Bangalore
+                    this.map = L.map('map').setView([12.9716, 77.5946], 11);
+                    
+                    // Add tile layer
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors',
+                        maxZoom: 19
+                    }).addTo(this.map);
+                    
+                    // Custom icons
+                    const propertyIcon = L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div style="background-color: {{ $theme['primary_color'] }}; width: 36px; height: 36px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;">
+                                <svg style="width: 18px; height: 18px; transform: rotate(45deg); color: white;" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                                </svg>
+                            </div>`,
+                        iconSize: [36, 36],
+                        iconAnchor: [18, 36],
+                        popupAnchor: [0, -36]
+                    });
+                    
+                    const projectIcon = L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div style="background-color: {{ $theme['secondary_color'] }}; width: 36px; height: 36px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;">
+                                <svg style="width: 18px; height: 18px; transform: rotate(45deg); color: white;" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>`,
+                        iconSize: [36, 36],
+                        iconAnchor: [18, 36],
+                        popupAnchor: [0, -36]
+                    });
+                    
+                    // Add markers
+                    const properties = @json($properties);
+                    const projects = @json($projects);
+                    const type = '{{ $type }}';
+                    
+                    // Add property markers
+                    if (type === 'properties' || type === 'all') {
+                        properties.forEach(property => {
+                            if (property.latitude && property.longitude) {
+                                const marker = L.marker([property.latitude, property.longitude], { icon: propertyIcon })
+                                    .addTo(this.map);
+                                this.markers[`property-${property.id}`] = marker;
+                            }
+                        });
+                    }
+                    
+                    // Add project markers
+                    if (type === 'projects' || type === 'all') {
+                        projects.forEach(project => {
+                            if (project.latitude && project.longitude) {
+                                const marker = L.marker([project.latitude, project.longitude], { icon: projectIcon })
+                                    .addTo(this.map);
+                                this.markers[`project-${project.id}`] = marker;
+                            }
+                        });
+                    }
+                    
+                    // Fit bounds to show all markers
+                    if (Object.keys(this.markers).length > 0) {
+                        const group = L.featureGroup(Object.values(this.markers));
+                        this.map.fitBounds(group.getBounds().pad(0.1));
+                    }
+                },
+                
+                focusLocation(lat, lng, id) {
+                    // Remove previous circle
+                    if (this.focusCircle) {
+                        this.map.removeLayer(this.focusCircle);
+                    }
+                    
+                    // Add 300m radius circle
+                    this.focusCircle = L.circle([lat, lng], {
+                        color: '{{ $theme['primary_color'] }}',
+                        fillColor: '{{ $theme['primary_color'] }}',
+                        fillOpacity: 0.15,
+                        radius: 300,
+                        weight: 2
+                    }).addTo(this.map);
+                    
+                    // Highlight marker
+                    if (this.markers[id]) {
+                        this.currentFocusMarker = id;
+                    }
+                },
+                
+                clearFocus() {
+                    if (this.focusCircle) {
+                        this.map.removeLayer(this.focusCircle);
+                        this.focusCircle = null;
+                    }
+                    this.currentFocusMarker = null;
+                },
+                
+                centerMap(lat, lng) {
+                    this.map.setView([lat, lng], 16, {
+                        animate: true,
+                        duration: 0.5
+                    });
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .custom-marker {
+            background: transparent;
+            border: none;
+        }
+        
+        /* Custom scrollbar */
+        .overflow-y-auto::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .overflow-y-auto::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+            background: {{ $theme['primary_color'] }};
+            border-radius: 10px;
+        }
+        
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+            background: {{ $theme['secondary_color'] }};
+        }
+    </style>
 </x-layout.frontend>

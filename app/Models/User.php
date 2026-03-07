@@ -176,4 +176,23 @@ class User extends Authenticatable
             return $role->permissions;
         })->unique('id');
     }
+
+    /**
+     * Favorites relationship
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * Check if user has favorited an item
+     */
+    public function hasFavorited($type, $id)
+    {
+        return $this->favorites()
+            ->where('favoritable_type', $type)
+            ->where('favoritable_id', $id)
+            ->exists();
+    }
 }

@@ -11,7 +11,7 @@ class Property extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'title', 'slug', 'description', 'type', 'category', 'property_type',
+        'title', 'slug', 'description', 'type', 'sale_type', 'category', 'property_type',
         'price', 'price_per_sqft', 'maintenance_charges', 'maintenance_period', 'security_deposit',
         'carpet_area', 'built_up_area', 'super_built_up_area', 'area_unit',
         'bedrooms', 'bathrooms', 'balconies', 'floor_number', 'total_floors',
@@ -120,5 +120,15 @@ class Property extends Model
     public function getPrimaryImageAttribute()
     {
         return $this->images[0] ?? null;
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
